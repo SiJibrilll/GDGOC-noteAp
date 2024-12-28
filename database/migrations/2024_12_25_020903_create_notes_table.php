@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('content');
             $table->json('tags');
             $table->text('folder');
-            $table->bool('is_pinned');
+            $table->boolean('is_pinned');
             $table->timestamps();
         });
     }

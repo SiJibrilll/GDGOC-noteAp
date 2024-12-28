@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('share_id');
             $table->foreignid('shared_by_user_id');
             $table->foreignid('shared_with_id');
-            $table->enum('permission', ['view', 'edit'])
+            $table->enum('permission', ['view', 'edit']);
             $table->timestamp('shared_at');
             $table->timestamps();
         });
