@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -11,8 +12,14 @@ use Illuminate\Support\Facades\Route;
 //     return $request;
 // });
 
+Route::get('/', function() {
+    return response()->json([
+        'Hello' => 'world'
+    ]);
+});
+
 Route::middleware('api')->group(function () {
-    Route::get('/', function() {
-        return 'Hello world';
-    });
+    Route::post('/register', [UserController::class, 'register']);
+
+    Route::post('/login', [UserController::class, 'login']);
 });
