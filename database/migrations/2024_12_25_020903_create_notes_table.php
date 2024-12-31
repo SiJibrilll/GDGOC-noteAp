@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id('note_id');
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->text('content');
-            $table->json('tags');
-            $table->text('folder');
+            $table->json('tags')->nullable();
+            $table->text('folder')->nullable();
             $table->boolean('is_pinned');
             $table->timestamps();
         });
