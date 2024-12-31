@@ -29,7 +29,7 @@ class UserController extends Controller
     public function login(Request $request) {
         $validated = $request->validate([
             'email' => 'required|email|exists:users',
-            'password' => 'required|confirmed'
+            'password' => 'required'
         ]);
 
         $user = User::where('email', $request->email)->first();
@@ -46,5 +46,13 @@ class UserController extends Controller
             'user' => $user,
             'token' => $token->plainTextToken
         ]);
+    }
+
+    function logout(Request $request) {
+        $request->user()->tokens()->delete();
+
+        return [
+            'message' => 'Logged out successfully'
+        ];
     }
 }
