@@ -32,7 +32,15 @@ class NoteController extends Controller
     }
 
     function show(Request $request, $id) {
-        return $request->user()->notes()->where('note_id', $id)->first();
+        $note = $request->user()->notes()->where('note_id', $id)->first();
+
+        if ($note) {
+            return $note;
+        } else {
+            return [
+                'message' => 'Note not found'
+            ];
+        }
     }
 
     function update(Request $request, $id) {
@@ -57,11 +65,20 @@ class NoteController extends Controller
     }
 
     function delete(Request $request, $id) {
-        $request->user()->notes()->where('note_id', $id)->delete();
+        $note = $request->user()->notes()->where('note_id', $id)->first();
 
-        return [
-            'message' => 'Note deleted successfullY'
-        ];
+        if ($note) {
+            $note->delete();
+
+             return [
+                'message' => 'Note deleted successfully'
+             ];
+
+        } else {
+            return [
+                'message' => 'Note not found'
+            ];
+        }
     }
 
 }
