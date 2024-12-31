@@ -52,11 +52,14 @@ class NoteController extends Controller
             'is_pinned' => 'boolean'
         ]);
 
-
-
-        $request->user()->notes()->where('note_id', $id)->update($validated);
-
         $note = $request->user()->notes()->where('note_id', $id)->first();
+
+        if (!$note) {
+            return ['message' => 'Note not found'];
+        }
+
+
+        $note->update($validated);
 
         return [
             'message' => 'Note updated successfully',
