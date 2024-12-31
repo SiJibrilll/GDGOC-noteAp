@@ -7,6 +7,9 @@ use App\Models\User;
 
 class Note extends Model
 {
+
+    protected $primaryKey = 'note_id';
+
     protected $fillable = [
         'title',
         'content',
