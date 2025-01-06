@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('shared_notes', function (Blueprint $table) {
             $table->id('share_id');
-            $table->foreignid('shared_by_user_id');
-            $table->foreignid('shared_with_id');
+            $table->foreignid('note_id')->constrained('notes', 'note_id')->onDelete('cascade');
+            $table->foreignid('shared_by_user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignid('shared_with_id')->constrained('users')->onDelete('cascade');
             $table->enum('permission', ['view', 'edit']);
             $table->timestamp('shared_at');
             $table->timestamps();

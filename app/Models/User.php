@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Note;
+use App\Models\SharedNote;
 
 class User extends Authenticatable
 {
@@ -50,5 +51,18 @@ class User extends Authenticatable
 
     function notes() {
         return $this->hasMany(Note::class);
+    }
+
+    public function shared_by() {
+        return $this->belongsToMany(Note::class, 'shared_notes', 'shared_by_user_id', 'note_id')->withPivot('shared_at');
+    }
+
+    public function shared_with() {
+        return $this->belongsToMany(Note::class, 'shared_notes', 'shared_with_id', 'note_id')->withPivot('shared_at');
+    }
+
+    public function revoke_sharing($shared_with_id, $note_id) {
+        SharedNote::where('shared_by_user_id', $this->id)->where('shared_with_id', $shared_with_id)->where('note_id', $note_id)->delete();
+
     }
 }
