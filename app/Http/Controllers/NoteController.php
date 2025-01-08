@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Note;
 
 class NoteController extends Controller
 {
@@ -34,13 +35,21 @@ class NoteController extends Controller
     function show(Request $request, $id) {
         $note = $request->user()->notes()->where('note_id', $id)->first();
 
+
         if ($note) {
-            return $note;
-        } else {
             return [
-                'message' => 'Note not found'
+                'note' => $note,
+                'shared_with' => $note->shared_with()->get()
             ];
         }
+
+        $shared = $request->user()->shared_with()->wherePivot('note_id', $id)->first();
+
+        if ($shared) {
+            return $shared;
+        }
+
+        return response()->json(['message' => 'Note not found'], 404);
     }
 
     function update(Request $request, $id) {
@@ -52,10 +61,21 @@ class NoteController extends Controller
             'is_pinned' => 'boolean'
         ]);
 
-        $note = $request->user()->notes()->where('note_id', $id)->first();
+        $note = Note::where('note_id', $id)->first();
 
         if (!$note) {
             return ['message' => 'Note not found'];
+        }
+
+
+        $shared = $note->shared_with()->where('shared_with_id', $request->user()->id)->first();
+
+        if (!$shared) {
+            return response()->json(['message'=>'You do not have permission to edit this note'], 422);
+        }
+
+        if($shared->pivot->permission != 'edit' && $note['user_id'] != $request->user()->id) {
+            return response()->json(['message'=>'You do not have the permission to edit this note'], 422);
         }
 
 

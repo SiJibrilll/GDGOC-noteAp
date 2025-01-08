@@ -11,6 +11,7 @@ class SharedNote extends Model
     protected $primaryKey = 'share_id';
 
     protected $fillable = [
+        'note_id',
         'shared_by_user_id',
         'shared_with_id',
         'permission',

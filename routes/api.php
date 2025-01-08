@@ -40,7 +40,7 @@ Route::middleware('api')->group(function () {
 
         Route::delete('/notes/{id}', [NoteController::class, 'delete']);
 
-        Route::post('/notes/{id}/shared', [SharedNoteController::class, 'store']);
+        Route::post('/notes/{id}/share', [SharedNoteController::class, 'store']);
 
         Route::delete('/notes/{id}/share/{share_id}', [SharedNoteController::class, 'delete']);
     });
