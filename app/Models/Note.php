@@ -24,6 +24,6 @@ class Note extends Model
     }
 
     public function shared_with() {
-        return $this->belongsToMany(User::class, 'shared_notes', 'note_id', 'shared_with_id')->withPivot('shared_at', 'permission');
+        return $this->belongsToMany(User::class, 'shared_notes', 'note_id', 'shared_with_id')->withPivot('share_id', 'shared_at', 'permission');
     }
 }

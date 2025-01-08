@@ -67,6 +67,16 @@ class NoteController extends Controller
             return ['message' => 'Note not found'];
         }
 
+        if ($note['user_id'] == $request->user()->id) {
+            $note->update($validated);
+
+            return [
+                'message' => 'Note updated successfully',
+                'note' => $note
+            ];
+        }
+
+        // if the user does not own the note (for sharing)
 
         $shared = $note->shared_with()->where('shared_with_id', $request->user()->id)->first();
 
@@ -74,7 +84,7 @@ class NoteController extends Controller
             return response()->json(['message'=>'You do not have permission to edit this note'], 422);
         }
 
-        if($shared->pivot->permission != 'edit' && $note['user_id'] != $request->user()->id) {
+        if($shared->pivot->permission != 'edit') {
             return response()->json(['message'=>'You do not have the permission to edit this note'], 422);
         }
 
