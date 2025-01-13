@@ -1,66 +1,311 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## API Endpoints
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+The application provides the following API endpoints:
 
-## About Laravel
+### Authentication
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Register a new user**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+  - **Endpoint:** `POST /register`
+  - **Description:** Registers a new user with the application.
+  - **Request Body:**
+    ```json
+    {
+      "name": "string",
+      "email": "string",
+      "password": "string",
+      "password_confirmation": "string"
+    }
+    ```
+  - **Response:**
+    - Response Body:
+        ```json
+        {
+        "user" : {
+            "name" : "username",
+            "email" : "email@mail.com",
+            "updated_at" : "2025-01-08T01:10:43.000000Z",
+            "created_at" : "2025-01-08T01:10:43.000000Z",
+            "id" : "1"
+            },
+        "token" : "1|e5RxFaJh2fyyNuBr4iIak2nHLgBnbzVJMWC4NE3Aaef577a7"
+        }
+        ```
+    - **Error:** Returns validation errors.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Login**
 
-## Learning Laravel
+  - **Endpoint:** `POST /login`
+  - **Description:** Authenticates a user and returns an access token.
+  - **Request Body:**
+    ```json
+    {
+      "email": "string",
+      "password": "string"
+    }
+    ```
+  - **Response:**
+    - Response Body:
+        ```json
+        {
+        "user" : {
+            "name" : "username",
+            "email" : "email@mail.com",
+            "email_verified_at" : null,
+            "updated_at" : "2025-01-08T01:10:43.000000Z",
+            "created_at" : "2025-01-08T01:10:43.000000Z",
+            "id" : "1"
+            },
+        "token" : "1|e5RxFaJh2fyyNuBr4iIak2nHLgBnbzVJMWC4NE3Aaef577a7"
+        }
+        ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    - **Error:** Returns authentication errors.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Logout**
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+  - **Endpoint:** `POST /logout`
+  - **Description:** Logs out the authenticated user and invalidates the token.
+  - **Headers:**
+    - `Authorization: Bearer {token}`
+  - **Response:**
+    - **Success:** Returns a logout confirmation message.
+    - **Error:** Returns authentication errors.
 
-## Laravel Sponsors
+### Notes
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **Get all notes**
 
-### Premium Partners
+  - **Endpoint:** `GET /notes`
+  - **Description:** Retrieves a list of all notes for the authenticated user.
+  - **Headers:**
+    - `Authorization: Bearer {token}`
+  - **Response:**
+    - Response Body:
+        ```json
+        {
+        "notes": [
+            {
+              "note_id": 1,
+              "user_id": 1,
+              "title": "Hello world",
+              "content": "This is my first note",
+              "tags": null,
+              "folder": null,
+              "is_pinned": 0,
+              "created_at": "2025-01-08T01:11:07.000000Z",
+              "updated_at": "2025-01-08T01:20:44.000000Z"
+            }
+          ]
+        }
+        ```
+    - **Error:** Returns authentication errors.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- **Create a new note**
 
-## Contributing
+  - **Endpoint:** `POST /notes`
+  - **Description:** Creates a new note for the authenticated user.
+  - **Headers:**
+    - `Authorization: Bearer {token}`
+  - **Request Body:**
+    ```json
+    {
+      "title": "string",
+      "content": "string"
+      "is_pinned" : "0" // Also accepts other boolean values
+    }
+    ```
+  - **Response:**
+    - Response Body:
+        ```json
+        {
+          "message": "Note created successfully",
+          "note": {
+            "title": "Hello world",
+            "content": "This is my first note",
+            "is_pinned": "0",
+            "user_id": 1,
+            "updated_at": "2025-01-08T01:11:07.000000Z",
+            "created_at": "2025-01-08T01:11:07.000000Z",
+            "note_id": 1
+          }
+        }
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+        ```
+    - **Error:** Returns validation errors.
 
-## Code of Conduct
+- **Get a specific note**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+  - **Endpoint:** `GET /notes/{id}`
+  - **Description:** Retrieves the details of a specific note by its ID.
+  - **Headers:**
+    - `Authorization: Bearer {token}`
+  - **Response:**
+    - Response Body:
+        ```json
+        {
+          "note": {
+            "note_id": 1,
+            "user_id": 1,
+            "title": "Hello world",
+            "content": "This is my first note updated by jane",
+            "tags": null,
+            "folder": null,
+            "is_pinned": 0,
+            "created_at": "2025-01-08T01:11:07.000000Z",
+            "updated_at": "2025-01-08T01:20:44.000000Z"
+          },
+          "shared_with": [
+            {
+              "id": 2,
+              "name": "jane",
+              "email": "jane@gmail.com",
+              "email_verified_at": null,
+              "created_at": "2025-01-08T01:16:14.000000Z",
+              "updated_at": "2025-01-08T01:16:14.000000Z",
+              "pivot": {
+                "note_id": 1,
+                "shared_with_id": 2,
+                "share_id": 2,
+                "shared_at": "2025-01-08 01:19:19",
+                "permission": "edit"
+              }
+            }
+          ]
+        }
 
-## Security Vulnerabilities
+        ```
+    - **Error:** Returns errors if the note is not found or access is unauthorized.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- **Update a note**
 
-## License
+  - **Endpoint:** `PUT /notes/{id}`
+  - **Description:** Updates the specified note.
+  - **Headers:**
+    - `Authorization: Bearer {token}`
+  - **Request Body:**
+    ```json
+    {
+      "title": "string",
+      "content": "string",
+      "is_pinned" : "0" // Also accepts other boolean values
+    }
+    ```
+  - **Response:**
+    - Response Body :
+        ```json
+        {
+          "message": "Note updated successfully",
+          "note": {
+            "note_id": 1,
+            "user_id": 1,
+            "title": "Hello world",
+            "content": "This is my first note updated",
+            "tags": null,
+            "folder": null,
+            "is_pinned": "0",
+            "created_at": "2025-01-08T01:11:07.000000Z",
+            "updated_at": "2025-01-08T01:15:34.000000Z"
+          }
+        }
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+        ```
+    - **Error:** Returns validation errors or unauthorized access errors.
+
+- **Delete a note**
+
+  - **Endpoint:** `DELETE /notes/{id}`
+  - **Description:** Deletes the specified note.
+  - **Headers:**
+    - `Authorization: Bearer {token}`
+  - **Response:**
+    - **Success:** Returns a deletion confirmation message.
+    - **Error:** Returns errors if the note is not found or access is unauthorized.
+
+### Sharing
+
+- **Share a note**
+
+  - **Endpoint:** `POST /notes/{note_id}/share`
+  - **Description:** Shares a note with another user.
+  - **Headers:**
+    - `Authorization: Bearer {token}`
+  - **Request Body:**
+    ```json
+    {
+      "shared_with": "string",
+      "permission" : "view" // view/edit is available
+    }
+    ```
+  - **Response:**
+    - Response Body:
+    ```json
+    {
+      "message": "Note shared successfully",
+      "shared_note": {
+        "shared_by_user_id": 1,
+        "shared_with_id": 2,
+        "note_id": 1,
+        "permission": "edit",
+        "shared_at": "2025-01-08T01:19:19.031759Z",
+        "updated_at": "2025-01-08T01:19:19.000000Z",
+        "created_at": "2025-01-08T01:19:19.000000Z",
+        "share_id": 2
+      }
+    }
+
+    ```
+    - **Error:** Returns validation errors or unauthorized access errors.
+
+- **View shared notes**
+  - **Endpoint:** `GET /notes/shared`
+  - **Description:** Retrieves a list of notes shared with the authenticated user.
+  - **Headers:**
+    - `Authorization: Bearer {token}`
+  - **Response:**
+    - Response Body:
+    ```json
+    {
+      "shared_notes": [
+        {
+          "note_id": 1,
+          "user_id": 1,
+          "title": "Hello world",
+          "content": "This is my first note updated",
+          "tags": null,
+          "folder": null,
+          "is_pinned": 0,
+          "created_at": "2025-01-08T01:11:07.000000Z",
+          "updated_at": "2025-01-08T01:15:34.000000Z",
+          "pivot": {
+            "shared_with_id": 2,
+            "note_id": 1,
+            "shared_at": "2025-01-08 01:17:29",
+            "permission": "view"
+          }
+        }
+      ]
+    }
+
+    ```
+    - **Error:** Returns authentication errors.
+
+- **Revoke access to a shared note**
+
+  - **Endpoint:** `DELETE /notes/{note_id}/share/{share_id}`
+  - **Description:** Revokes a user's access to a shared note.
+  - **Headers:**
+    - `Authorization: Bearer {token}`
+  - **Response:**
+    - Response Body:
+    ```json
+    {
+      "message": "Revoked successfully",
+      "shared_with": [] // returns the remaining user still having access to the shared note
+    }
+
+    ```
+    - **Error:** Returns errors if the note or user is not found, or access is unauthorized.
+
+**Note:** Replace `{id}`, `{note_id}`, and `{user_id}` with the actual IDs of the notes and users in your application. Ensure that all requests requiring authentication include the `Authorization` header with a valid token.
+
