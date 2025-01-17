@@ -90,8 +90,8 @@ The application provides the following API endpoints:
               "user_id": 1,
               "title": "Hello world",
               "content": "This is my first note",
-              "tags": null,
-              "folder": null,
+              "tags": "[\"work"\, \"project"\]",
+              "folder": "First Project",
               "is_pinned": 0,
               "created_at": "2025-01-08T01:11:07.000000Z",
               "updated_at": "2025-01-08T01:20:44.000000Z"
@@ -112,6 +112,8 @@ The application provides the following API endpoints:
     {
       "title": "string",
       "content": "string"
+      "tags": "[\"work"\, \"project"\]", // nullable
+      "folder": "First Project", // nullable
       "is_pinned" : "0" // Also accepts other boolean values
     }
     ```
@@ -124,6 +126,8 @@ The application provides the following API endpoints:
             "title": "Hello world",
             "content": "This is my first note",
             "is_pinned": "0",
+            "tags": "[\"work"\, \"project"\]",
+            "folder": "First Project",
             "user_id": 1,
             "updated_at": "2025-01-08T01:11:07.000000Z",
             "created_at": "2025-01-08T01:11:07.000000Z",
@@ -149,8 +153,8 @@ The application provides the following API endpoints:
             "user_id": 1,
             "title": "Hello world",
             "content": "This is my first note updated by jane",
-            "tags": null,
-            "folder": null,
+            "tags": "[\"work"\, \"project"\]",
+            "folder": "First Project",
             "is_pinned": 0,
             "created_at": "2025-01-08T01:11:07.000000Z",
             "updated_at": "2025-01-08T01:20:44.000000Z"
@@ -188,6 +192,8 @@ The application provides the following API endpoints:
     {
       "title": "string",
       "content": "string",
+      "tags": "[\"work"\, \"project"\]", // nullable
+      "folder": "First Project", // nullable
       "is_pinned" : "0" // Also accepts other boolean values
     }
     ```
@@ -201,8 +207,8 @@ The application provides the following API endpoints:
             "user_id": 1,
             "title": "Hello world",
             "content": "This is my first note updated",
-            "tags": null,
-            "folder": null,
+            "tags": "[\"work"\, \"project"\]",
+            "folder": "First Project",
             "is_pinned": "0",
             "created_at": "2025-01-08T01:11:07.000000Z",
             "updated_at": "2025-01-08T01:15:34.000000Z"
@@ -272,8 +278,8 @@ The application provides the following API endpoints:
           "user_id": 1,
           "title": "Hello world",
           "content": "This is my first note updated",
-          "tags": null,
-          "folder": null,
+          "tags": "[\"work"\, \"project"\]",
+          "folder": "First Project",
           "is_pinned": 0,
           "created_at": "2025-01-08T01:11:07.000000Z",
           "updated_at": "2025-01-08T01:15:34.000000Z",
