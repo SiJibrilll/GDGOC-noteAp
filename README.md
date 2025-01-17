@@ -313,5 +313,5 @@ The application provides the following API endpoints:
     ```
     - **Error:** Returns errors if the note or user is not found, or access is unauthorized.
 
-**Note:** Replace `{id}`, `{note_id}`, and `{user_id}` with the actual IDs of the notes and users in your application. Ensure that all requests requiring authentication include the `Authorization` header with a valid token.
+**Note:** Ensure that all requests requiring authentication include the `Authorization` header with a valid token.
 
