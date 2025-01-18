@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Note;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class NoteController extends Controller
 {
@@ -19,16 +21,33 @@ class NoteController extends Controller
             'content' => 'required|string',
             'tags' => 'json|nullable',
             'folder' => 'string|nullable',
-            'is_pinned' => 'boolean'
+            'is_pinned' => 'boolean',
+            'files' => 'file|nullable',
+            'files.*' => 'file|max:2048'
         ]);
 
 
 
         $note = $request->user()->notes()->create($validated);
 
+        $note = $note->fresh();
+
+        if ($request->hasFile('files')) {
+            $filename = Str::random(32) . "." . $request->file('files')->getClientOriginalExtension();
+            $path = $request->file('files')->storeAs('', $filename, 'public');
+            $note->files()->create(["path" => 'storage/' . $path]);
+        }
+
+        $files = $note->files()->get();
+
+        for ($i = 0; $i < count($files); $i++) {
+            $files[$i]['path'] = asset($files[$i]['path']);
+        }
+
         return [
             'message' => 'Note created successfully',
-            'note' => $note
+            'note' => $note->toArray(),
+            'files' => $files
         ];
     }
 
