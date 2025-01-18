@@ -77,7 +77,10 @@ class NoteController extends Controller
             'content' => 'required|string',
             'tags' => 'json|nullable',
             'folder' => 'string|nullable',
-            'is_pinned' => 'boolean'
+            'is_pinned' => 'boolean',
+            'files' => 'file|nullable',
+            'files.*' => 'file|max:2048'
+
         ]);
 
         $note = Note::where('note_id', $id)->first();
@@ -88,10 +91,27 @@ class NoteController extends Controller
 
         if ($note['user_id'] == $request->user()->id) {
             $note->update($validated);
+            $note->files()->delete();
+
+            $note = $note->fresh();
+
+            if ($request->hasFile('files')) {
+                $filename = Str::random(32) . "." . $request->file('files')->getClientOriginalExtension();
+                $path = $request->file('files')->storeAs('', $filename, 'public');
+                $note->files()->create(["path" => 'storage/' . $path]);
+            }
+
+            $files = $note->files()->get();
+
+            for ($i = 0; $i < count($files); $i++) {
+                $files[$i]['path'] = asset($files[$i]['path']);
+            }
+
 
             return [
                 'message' => 'Note updated successfully',
-                'note' => $note
+                'note' => $note,
+                'files' => $files
             ];
         }
 
@@ -109,10 +129,27 @@ class NoteController extends Controller
 
 
         $note->update($validated);
+        $note->files()->delete();
+
+        $note = $note->fresh();
+
+        if ($request->hasFile('files')) {
+            $filename = Str::random(32) . "." . $request->file('files')->getClientOriginalExtension();
+            $path = $request->file('files')->storeAs('', $filename, 'public');
+            $note->files()->create(["path" => 'storage/' . $path]);
+        }
+
+        $files = $note->files()->get();
+
+        for ($i = 0; $i < count($files); $i++) {
+            $files[$i]['path'] = asset($files[$i]['path']);
+        }
+
 
         return [
             'message' => 'Note updated successfully',
-            'note' => $note
+            'note' => $note,
+            'files' => $files
         ];
     }
 
