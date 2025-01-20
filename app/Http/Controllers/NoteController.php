@@ -56,17 +56,35 @@ class NoteController extends Controller
 
 
         if ($note) {
+            $files = $note->files()->get();
+
+            for ($i = 0; $i < count($files); $i++) {
+                $files[$i]['path'] = asset($files[$i]['path']);
+            }
+
+
             return [
                 'note' => $note,
-                'shared_with' => $note->shared_with()->get()
+                'shared_with' => $note->shared_with()->get(),
+                'files' => $files
             ];
         }
 
         $shared = $request->user()->shared_with()->wherePivot('note_id', $id)->first();
 
         if ($shared) {
-            return $shared;
+            $files = $shared->files()->get();
+
+            for ($i = 0; $i < count($files); $i++) {
+                $files[$i]['path'] = asset($files[$i]['path']);
+            }
+
+            return [
+                'note' => $shared,
+                'files' => $files
+            ];
         }
+
 
         return response()->json(['message' => 'Note not found'], 404);
     }
