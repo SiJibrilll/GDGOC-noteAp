@@ -202,7 +202,7 @@ The application provides the following API endpoints:
 - **Update a note**
 
   - **Endpoint:** `PUT /notes/{id}`
-  - **Description:** Updates the specified note. User's who have a shared access with edit permission to this note can also use this endpoint to update a note.
+  - **Description:** Updates the specified note. User's who have a shared access with edit permission to this note can also use this endpoint to update a note. To handle file uploads, you must send a POST request with _method=PUT in the formdata submission.
   - **Headers:**
     - `Authorization: Bearer {token}`
   - **Request Body:**
