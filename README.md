@@ -120,7 +120,7 @@ The application provides the following API endpoints:
     **Form Data Parameters Example**
     | Parameter    | Type           | Description                          |
     |--------------|----------------|--------------------------------------|
-    | '_method'    | string         | Must be PUT.                        |
+    | `_method`    | string         | Must be PUT.                        |
     | `title`      | string         | The title of the note.              |
     | `content`    | string         | The main content of the note.       |
     | `tags`       | JSON or null   | (Optional) Tags for the note.        |
@@ -229,7 +229,7 @@ The application provides the following API endpoints:
     **Form Data Parameters Example**
     | Parameter    | Type           | Description                          |
     |--------------|----------------|--------------------------------------|
-    | '_method'    | string         | Must be PUT.                        |
+    | `_method`    | string         | Must be PUT.                        |
     | `title`      | string         | The title of the note.              |
     | `content`    | string         | The main content of the note.       |
     | `tags`       | JSON or null   | (Optional) Tags for the note.        |
