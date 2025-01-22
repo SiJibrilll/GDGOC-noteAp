@@ -104,7 +104,7 @@ The application provides the following API endpoints:
 - **Create a new note**
 
   - **Endpoint:** `POST /notes`
-  - **Description:** Creates a new note for the authenticated user.
+  - **Description:** Creates a new note for the authenticated user. To handle file uploads, you must send a POST request with _method=PUT in the formdata submission. 
   - **Headers:**
     - `Authorization: Bearer {token}`
   - **Request Body:**
@@ -132,7 +132,16 @@ The application provides the following API endpoints:
             "updated_at": "2025-01-08T01:11:07.000000Z",
             "created_at": "2025-01-08T01:11:07.000000Z",
             "note_id": 1
-          }
+          },
+          "files": [
+            {
+              "id": 1,
+              "path": "http://localhost:8000/storage/dASApMnTGzpjm2u1F698V1R2X1fvZClw.jpg",
+              "note_id": 1,
+              "created_at": "2025-01-22T02:44:48.000000Z",
+              "updated_at": "2025-01-22T02:44:48.000000Z"
+            }
+          ]
         }
 
         ```
@@ -141,7 +150,7 @@ The application provides the following API endpoints:
 - **Get a specific note**
 
   - **Endpoint:** `GET /notes/{id}`
-  - **Description:** Retrieves the details of a specific note by its ID.
+  - **Description:** Retrieves the details of a specific note by its ID. User's who have a shared access with at least view permission can also use this endpoint
   - **Headers:**
     - `Authorization: Bearer {token}`
   - **Response:**
@@ -175,6 +184,15 @@ The application provides the following API endpoints:
                 "permission": "edit"
               }
             }
+          ],
+          "files": [
+            {
+              "id": 1,
+              "path": "http://localhost:8000/storage/dASApMnTGzpjm2u1F698V1R2X1fvZClw.jpg",
+              "note_id": 1,
+              "created_at": "2025-01-22T02:44:48.000000Z",
+              "updated_at": "2025-01-22T02:44:48.000000Z"
+            }
           ]
         }
 
@@ -184,7 +202,7 @@ The application provides the following API endpoints:
 - **Update a note**
 
   - **Endpoint:** `PUT /notes/{id}`
-  - **Description:** Updates the specified note.
+  - **Description:** Updates the specified note. User's who have a shared access with edit permission to this note can also use this endpoint to update a note.
   - **Headers:**
     - `Authorization: Bearer {token}`
   - **Request Body:**
@@ -212,7 +230,16 @@ The application provides the following API endpoints:
             "is_pinned": "0",
             "created_at": "2025-01-08T01:11:07.000000Z",
             "updated_at": "2025-01-08T01:15:34.000000Z"
-          }
+          },
+          "files": [
+            {
+              "id": 2,
+              "path": "http://localhost:8000/storage/dASApMnTGzpjm2u1F698V1R2X1fvZClw.jpg",
+              "note_id": 1,
+              "created_at": "2025-01-22T02:44:48.000000Z",
+              "updated_at": "2025-01-22T02:44:48.000000Z"
+            }
+          ]
         }
 
         ```
