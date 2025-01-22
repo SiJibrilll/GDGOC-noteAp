@@ -117,6 +117,17 @@ The application provides the following API endpoints:
       "is_pinned" : "0" // Also accepts other boolean values
     }
     ```
+    **Form Data Parameters Example**
+    | Parameter    | Type           | Description                          |
+    |--------------|----------------|--------------------------------------|
+    | '_method'    | string         | Must be PUT.                        |
+    | `title`      | string         | The title of the note.              |
+    | `content`    | string         | The main content of the note.       |
+    | `tags`       | JSON or null   | (Optional) Tags for the note.        |
+    | `folder`     | string or null | (Optional) Folder name.               |
+    | `is_pinned`  | boolean        | (Optional) Pin status of the note.  |
+    | `files`      | file           | (Optional) File(s) to attach.        |
+
   - **Response:**
     - Response Body:
         ```json
@@ -215,6 +226,17 @@ The application provides the following API endpoints:
       "is_pinned" : "0" // Also accepts other boolean values
     }
     ```
+    **Form Data Parameters Example**
+    | Parameter    | Type           | Description                          |
+    |--------------|----------------|--------------------------------------|
+    | '_method'    | string         | Must be PUT.                        |
+    | `title`      | string         | The title of the note.              |
+    | `content`    | string         | The main content of the note.       |
+    | `tags`       | JSON or null   | (Optional) Tags for the note.        |
+    | `folder`     | string or null | (Optional) Folder name.               |
+    | `is_pinned`  | boolean        | (Optional) Pin status of the note.  |
+    | `files`      | file           | (Optional) File(s) to attach.        |
+
   - **Response:**
     - Response Body :
         ```json
