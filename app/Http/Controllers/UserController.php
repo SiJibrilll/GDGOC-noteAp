@@ -10,9 +10,9 @@ class UserController extends Controller
 {
     public function register(Request $request) {
         $validated = $request->validate([
-            'name' => 'required',
+            'name' => 'required|string',
             'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed'
+            'password' => 'required|string|confirmed|min:8'
         ]);
 
         $user = User::create($validated);
