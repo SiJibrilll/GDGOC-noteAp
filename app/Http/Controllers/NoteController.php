@@ -22,7 +22,7 @@ class NoteController extends Controller
             'tags' => 'array|nullable',
             'tags.*' => 'string|distinct',
             'folder' => 'string|nullable',
-            'is_pinned' => 'boolean',
+            'is_pinned' => 'required|boolean',
             'files' => 'file|nullable',
             'files.*' => 'file|max:2048'
         ]);
