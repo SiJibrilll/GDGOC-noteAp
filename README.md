@@ -2,6 +2,10 @@
 
 The application provides the following API endpoints:
 
+## IMPORTANT!
+
+Make sure every request comes with an `Accept: application/json` inside the header to ensure proper responses from the system.
+
 ### Authentication
 
 - **Register a new user**
