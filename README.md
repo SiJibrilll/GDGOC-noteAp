@@ -124,7 +124,7 @@ The application provides the following API endpoints:
     | `content`    | string         | The main content of the note.       |
     | `tags`       | array or null   | (Optional) Tags for the note.        |
     | `folder`     | string or null | (Optional) Folder name.               |
-    | `is_pinned`  | boolean        | (Optional) Pin status of the note.  |
+    | `is_pinned`  | boolean        |  Pin status of the note.  |
     | `files`      | file           | (Optional) File(s) to attach.        |
 
   - **Response:**
@@ -235,7 +235,7 @@ The application provides the following API endpoints:
     | `content`    | string         | The main content of the note.       |
     | `tags`       | JSON or null   | (Optional) Tags for the note.        |
     | `folder`     | string or null | (Optional) Folder name.               |
-    | `is_pinned`  | boolean        | (Optional) Pin status of the note.  |
+    | `is_pinned`  | boolean        | Pin status of the note.  |
     | `files`      | file           | (Optional) File(s) to attach.        |
 
   - **Response:**
