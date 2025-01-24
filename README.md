@@ -13,7 +13,7 @@ The application provides the following API endpoints:
     {
       "name": "string",
       "email": "string",
-      "password": "string",
+      "password": "string", // min 8 characters
       "password_confirmation": "string"
     }
     ```
@@ -90,7 +90,7 @@ The application provides the following API endpoints:
               "user_id": 1,
               "title": "Hello world",
               "content": "This is my first note",
-              "tags": "[\"work"\, \"project"\]",
+              "tags": ["work", "project"],
               "folder": "First Project",
               "is_pinned": 0,
               "created_at": "2025-01-08T01:11:07.000000Z",
@@ -104,15 +104,15 @@ The application provides the following API endpoints:
 - **Create a new note**
 
   - **Endpoint:** `POST /notes`
-  - **Description:** Creates a new note for the authenticated user. To handle file uploads, you must send a POST request with _method=PUT in the formdata submission. 
+  - **Description:** Creates a new note for the authenticated user.
   - **Headers:**
     - `Authorization: Bearer {token}`
   - **Request Body:**
     ```json
     {
       "title": "string",
-      "content": "string"
-      "tags": "[\"work"\, \"project"\]", // nullable
+      "content": "string",
+      "tags": ["work", "project"], // nullable
       "folder": "First Project", // nullable
       "is_pinned" : "0" // Also accepts other boolean values
     }
@@ -120,10 +120,9 @@ The application provides the following API endpoints:
     **Form Data Parameters Example**
     | Parameter    | Type           | Description                          |
     |--------------|----------------|--------------------------------------|
-    | `_method`    | string         | Must be PUT.                        |
     | `title`      | string         | The title of the note.              |
     | `content`    | string         | The main content of the note.       |
-    | `tags`       | JSON or null   | (Optional) Tags for the note.        |
+    | `tags`       | array or null   | (Optional) Tags for the note.        |
     | `folder`     | string or null | (Optional) Folder name.               |
     | `is_pinned`  | boolean        | (Optional) Pin status of the note.  |
     | `files`      | file           | (Optional) File(s) to attach.        |
@@ -137,7 +136,7 @@ The application provides the following API endpoints:
             "title": "Hello world",
             "content": "This is my first note",
             "is_pinned": "0",
-            "tags": "[\"work"\, \"project"\]",
+            "tags": ["work", "project"],
             "folder": "First Project",
             "user_id": 1,
             "updated_at": "2025-01-08T01:11:07.000000Z",
@@ -173,7 +172,7 @@ The application provides the following API endpoints:
             "user_id": 1,
             "title": "Hello world",
             "content": "This is my first note updated by jane",
-            "tags": "[\"work"\, \"project"\]",
+            "tags": ["work", "project"],
             "folder": "First Project",
             "is_pinned": 0,
             "created_at": "2025-01-08T01:11:07.000000Z",
@@ -212,7 +211,9 @@ The application provides the following API endpoints:
 
 - **Update a note**
 
-  - **Endpoint:** `PUT /notes/{id}`
+  - **Endpoint:** 
+    - For raw json without images: `PUT /notes/{id}`
+    - For form data submission with images: `POST /notes/{id}` **IMPORTANT!** send with the `_method=PUT` in the form data submission.
   - **Description:** Updates the specified note. User's who have a shared access with edit permission to this note can also use this endpoint to update a note. To handle file uploads, you must send a POST request with _method=PUT in the formdata submission.
   - **Headers:**
     - `Authorization: Bearer {token}`
@@ -221,7 +222,7 @@ The application provides the following API endpoints:
     {
       "title": "string",
       "content": "string",
-      "tags": "[\"work"\, \"project"\]", // nullable
+      "tags": ["work", "project"], // nullable
       "folder": "First Project", // nullable
       "is_pinned" : "0" // Also accepts other boolean values
     }
@@ -247,7 +248,7 @@ The application provides the following API endpoints:
             "user_id": 1,
             "title": "Hello world",
             "content": "This is my first note updated",
-            "tags": "[\"work"\, \"project"\]",
+            "tags": ["work", "project"],
             "folder": "First Project",
             "is_pinned": "0",
             "created_at": "2025-01-08T01:11:07.000000Z",
