@@ -214,7 +214,7 @@ The application provides the following API endpoints:
   - **Endpoint:** 
     - For raw json without images: `PUT /notes/{id}`
     - For form data submission with images: `POST /notes/{id}` **IMPORTANT!** send with the `_method=PUT` in the form data submission.
-  - **Description:** Updates the specified note. User's who have a shared access with edit permission to this note can also use this endpoint to update a note. To handle file uploads, you must send a POST request with _method=PUT in the formdata submission.
+  - **Description:** Updates the specified note. User's who have a shared access with edit permission to this note can also use this endpoint to update a note.
   - **Headers:**
     - `Authorization: Bearer {token}`
   - **Request Body:**
@@ -328,7 +328,7 @@ The application provides the following API endpoints:
           "user_id": 1,
           "title": "Hello world",
           "content": "This is my first note updated",
-          "tags": "[\"work"\, \"project"\]",
+          "tags": ["work", "project"],
           "folder": "First Project",
           "is_pinned": 0,
           "created_at": "2025-01-08T01:11:07.000000Z",
