@@ -11,6 +11,10 @@ class Note extends Model
 
     protected $primaryKey = 'note_id';
 
+    protected $casts = [
+        'tags' => 'array',
+    ];
+
     protected $fillable = [
         'title',
         'content',

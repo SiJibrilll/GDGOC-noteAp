@@ -19,14 +19,13 @@ class NoteController extends Controller
         $validated = $request->validate([
             'title' => 'required|string',
             'content' => 'required|string',
-            'tags' => 'json|nullable',
+            'tags' => 'array|nullable',
+            'tags.*' => 'string|distinct',
             'folder' => 'string|nullable',
             'is_pinned' => 'boolean',
             'files' => 'file|nullable',
             'files.*' => 'file|max:2048'
         ]);
-
-
 
         $note = $request->user()->notes()->create($validated);
 
