@@ -287,7 +287,7 @@ Make sure every request comes with an `Accept: application/json` inside the head
 - **Share a note**
 
   - **Endpoint:** `POST /notes/{note_id}/share`
-  - **Description:** Shares a note with another user.
+  - **Description:** Shares a note with another user. If the note is already shared with the target user, it would overwrite the existing permission.
   - **Headers:**
     - `Authorization: Bearer {token}`
   - **Request Body:**
