@@ -35,15 +35,19 @@ class SharedNoteController extends Controller
             return response()->json(['message' => 'Cannot share with note owner!'], 422);
         }
 
+
+
         //return ['hello' => $shared_with];
 
-        $shared_note = SharedNote::create([
-            'shared_by_user_id' => $request->user()->id,
-            'shared_with_id' => $shared_with['id'],
-            'note_id' => $note['note_id'],
-            'permission' => $validated['permission'],
-            'shared_at' => now()
-        ]);
+        $shared_note = SharedNote::updateOrCreate([
+                'shared_by_user_id' => $request->user()->id,
+                'shared_with_id' => $shared_with['id'],
+                'note_id' => $note['note_id']
+            ],
+            [
+                'permission' => $validated['permission'],
+                'shared_at' => now()
+            ]);
 
         return [
             'message' => 'Note shared successfully',
